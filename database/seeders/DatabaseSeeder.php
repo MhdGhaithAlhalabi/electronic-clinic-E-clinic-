@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Admin;
+use App\Models\City;
 use App\Models\Doctor;
-use App\Models\User;
+use App\Models\Patient;
+use App\Models\Region;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,16 +25,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        User::factory(20)->create([
-            'password' => bcrypt('password'),
+
+        Patient::factory(2)->create([
+            'password' => 'password',
         ]);
-        Doctor::factory(20)->create([
-            'password' => bcrypt('password'),
+        Doctor::factory(2)->create([
+            'password' => 'password',
         ]);
         Admin::factory(1)->create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
+            'password' => 'password',
         ]);
 
     }

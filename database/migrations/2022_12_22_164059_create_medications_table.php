@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('time');
+            $table->string('number');
+            $table->foreignId('consultation_id');
             $table->foreignId('doctor_id');
             $table->foreignId('patient_id');
             $table->timestamps();

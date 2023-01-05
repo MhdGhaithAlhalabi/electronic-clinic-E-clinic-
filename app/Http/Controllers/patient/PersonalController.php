@@ -5,6 +5,7 @@ namespace App\Http\Controllers\patient;
 use App\Http\Controllers\Controller;
 use App\Models\Personal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PersonalController extends Controller
 {
@@ -32,11 +33,37 @@ class PersonalController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'full_name' => 'required',
+            'mobile_number' => 'required',
+            'age' => 'required',
+            'height' => 'required',
+            'weight' => 'required',
+            'sex' => 'required',
+            'social_situation' => 'required',
+            'address' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json($validator->getMessageBag());
+        }
+        Personal::create( [
+            'full_name' => $request->full_name,
+            'mobile_number' => $request->mobile_number,
+            'age' => $request->age,
+            'height' => $request->height,
+            'weight' => $request->weight,
+            'sex' => $request->sex,
+            'social_situation' => $request->social_situation,
+            'address' => $request->address ,
+            'patient_id'=> auth()->user()->id
+        ]);
+        return response()->json('success');
     }
 
     /**

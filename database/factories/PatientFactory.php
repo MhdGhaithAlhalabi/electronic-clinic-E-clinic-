@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Address;
+use App\Models\City;
+use App\Models\Region;
+use App\Models\Specialization;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
  */
-class UserFactory extends Factory
+class PatientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,10 +22,10 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'phone_number' => fake()->phoneNumber(),
-            'address_id'=> Address::factory(),
-            'age' => fake()->numberBetween(1,100),
+            'password' => bcrypt('password'), // password
+            'region_id' => Region::factory(),
+            'image'=> fake()->image(),
+
         ];
     }
 

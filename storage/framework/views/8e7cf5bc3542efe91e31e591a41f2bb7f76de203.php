@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -40,36 +39,40 @@
 
                                 </thead>
                                 <tbody>
-                                @foreach($doctors as $doctor)
-                                    @if($doctor->status != 1)
+                                <?php $__currentLoopData = $doctors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($doctor->status != 1): ?>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{$doctor->name}}
+                                        <?php echo e($doctor->name); ?>
+
                                     </th>
                                     <td class="py-4 px-6">
-                                        <img src="{{url('storage/doctor images/'.$doctor->image )}}" alt="image">
+                                        <img src="<?php echo e(url('storage/doctor images/'.$doctor->image )); ?>" alt="image">
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{$doctor->mobile_number}}
+                                        <?php echo e($doctor->mobile_number); ?>
+
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{$doctor->specialization->name}}
+                                        <?php echo e($doctor->specialization->name); ?>
+
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{$doctor->region->name}} / {{$doctor->region->city->name}}
+                                        <?php echo e($doctor->region->name); ?> / <?php echo e($doctor->region->city->name); ?>
+
                                     </td>
                                     <td class="py-4 px-6">
-                                        <img src="{{url('storage/certificate doctor images/'.$doctor->certificate_image )}}" alt="image">
+                                        <img src="<?php echo e(url('storage/certificate doctor images/'.$doctor->certificate_image )); ?>" alt="image">
                                     </td>
                                     <td class="py-4 px-6">
-                                        <form method="post" action="{{url('doctorApprove',$doctor->id)}}" >
-                                            @csrf
+                                        <form method="post" action="<?php echo e(url('doctorApprove',$doctor->id)); ?>" >
+                                            <?php echo csrf_field(); ?>
                                             <button type="submit" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">active</button>
                                         </form>
                                     </td>
                                 </tr>
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                             <br />
@@ -101,31 +104,35 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($doctors as $doctor)
-                                    @if($doctor->status == 1)
+                                <?php $__currentLoopData = $doctors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if($doctor->status == 1): ?>
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{$doctor->name}}
+                                                <?php echo e($doctor->name); ?>
+
                                             </th>
                                             <td class="py-4 px-6">
-                                                <img src="{{url('storage/doctor images/'.$doctor->image )}}" alt="image">
+                                                <img src="<?php echo e(url('storage/doctor images/'.$doctor->image )); ?>" alt="image">
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{$doctor->mobile_number}}
+                                                <?php echo e($doctor->mobile_number); ?>
+
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{$doctor->specialization->name}}
+                                                <?php echo e($doctor->specialization->name); ?>
+
                                             </td>
                                             <td class="py-4 px-6">
-                                                {{$doctor->region->name}} / {{$doctor->region->city->name}}
+                                                <?php echo e($doctor->region->name); ?> / <?php echo e($doctor->region->city->name); ?>
+
                                             </td>
                                             <td class="py-4 px-6">
-                                                <img src="{{url('storage/certificate doctor images/'.$doctor->certificate_image )}}" alt="image">
+                                                <img src="<?php echo e(url('storage/certificate doctor images/'.$doctor->certificate_image )); ?>" alt="image">
                                             </td>
 
                                         </tr>
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -138,4 +145,6 @@
     </section>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\projects\Laravel projects\E-clinic\resources\views/doctorApprove.blade.php ENDPATH**/ ?>

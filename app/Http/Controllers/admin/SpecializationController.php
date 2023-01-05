@@ -40,14 +40,14 @@ class SpecializationController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name'=>['required','unique'],
-            'image'=>['required','image'],
+            'name'=>['required','unique:specializations'],
+            'image'=>['required'],//image
         ];
         $validator =  Validator::make($request->all(),$rules);
         if($validator->fails()){
-            return redirect()->back()->with($validator->getMessageBag());
+            return redirect()->back()->withErrors($validator->getMessageBag());
         }
-        // Handle File Upload
+    /*    // Handle File Upload
         if($request->hasFile('image')) {
             // Get filename with the extension
             $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -59,10 +59,10 @@ class SpecializationController extends Controller
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('image')->storeAs('public/Specialization image', $fileNameToStore);
-        }
+        }*/
         Specialization::create([
             'name'=>$request->name,
-            'image'=>$fileNameToStore
+            'image'=>$request->image//$fileNameToStore
         ]);
         return redirect()->back()->with('message','success');
     }

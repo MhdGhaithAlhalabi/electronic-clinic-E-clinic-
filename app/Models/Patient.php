@@ -2,30 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
 
 class Patient extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
     }
-
     protected $hidden = [
         'password',
     ];
-
-
-
     public function getJWTIdentifier()
     {
         // TODO: Implement getJWTIdentifier() method.
@@ -37,12 +31,8 @@ class Patient extends Authenticatable implements JWTSubject
         // TODO: Implement getJWTCustomClaims() method.
         return [];
     }
-    public function city(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(City::class);
-    }
-    public function region(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Region::class);
+        return $this->belongsTo(Region::class);
     }
 }

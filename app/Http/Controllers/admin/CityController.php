@@ -12,11 +12,12 @@ class CityController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $cities = City::with('region')->get();
+        return response()->json(['cities'=> $cities]);
     }
 
     /**
@@ -39,11 +40,11 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name'=>['required','unique'],
+            'name'=>['required','unique:cities'],
             ];
        $validator =  Validator::make($request->all(),$rules);
         if($validator->fails()){
-            return redirect()->back()->with($validator->getMessageBag());
+            return redirect()->back()->withErrors($validator->getMessageBag());
         }
         City::create(['name'=>$request->name]);
         return redirect()->back()->with('message','success');

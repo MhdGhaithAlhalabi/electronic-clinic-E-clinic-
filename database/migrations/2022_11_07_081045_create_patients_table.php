@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('image');
-            $table->foreignId('city_id');
+            $table->string('image')->nullable();
             $table->foreignId('region_id');
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class General extends Model
 {
     use HasFactory;
+
     public function patient(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Patient::class);

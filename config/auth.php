@@ -74,7 +74,7 @@ return [
     'providers' => [
         'patients' => [
             'driver' => 'eloquent',
-            'model' => App\Models\patients::class,
+            'model' => App\Models\Patient::class,
         ],
         'doctors' => [
             'driver' => 'eloquent',

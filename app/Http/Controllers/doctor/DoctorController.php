@@ -15,7 +15,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::with('city','region','specialization')->get();
+        $doctors = Doctor::with('region','specialization')->get();
         return view('doctorApprove',compact('doctors'));
     }
     public function doctorApprove(Doctor $doctor){

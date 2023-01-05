@@ -41,12 +41,12 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name'=>['required','unique'],
+            'name'=>['required','unique:regions'],
             'city_id'=>['required'],
         ];
         $validator =  Validator::make($request->all(),$rules);
         if($validator->fails()){
-            return redirect()->back()->with($validator->getMessageBag());
+            return redirect()->back()->withErrors($validator->getMessageBag());
         }
         Region::create([
             'name'=>$request->name,

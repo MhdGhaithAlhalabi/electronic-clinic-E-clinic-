@@ -4,7 +4,6 @@ namespace App\Http\Controllers\doctor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
-use App\Models\Patient;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,8 +59,8 @@ class authDoctorController extends Controller
             'specialization_id' => 'required',
             'main_title' => 'required',
             'title' => 'required',
-            'certificate_image' => ['required','image'],
-            'image' => ['required','image'],
+            'certificate_image' => ['required'],
+            'image' => ['required'],
             'opening_time' => 'required',
             'full_address' => 'required',
             'sex' => 'required',
@@ -71,7 +70,8 @@ class authDoctorController extends Controller
         if($validator->fails()){
             return response()->json($validator->getMessageBag());
         }
-        // Handle File Upload
+
+ /*       // Handle File Upload
         if($request->hasFile('certificate_image')) {
             // Get filename with the extension
             $filenameWithExt = $request->file('certificate_image')->getClientOriginalName();
@@ -96,20 +96,20 @@ class authDoctorController extends Controller
             $fileNameToStore2 = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('image')->storeAs('public/doctor images', $fileNameToStore2);
-        }
+        }*/
         $doctor = Doctor::create([
             'email' => $request->email,
             'password' =>$request->password ,
             'name' =>$request->name ,
             'mobile_number' =>$request->mobile_number ,
             'clinic_number' =>$request->clinic_number ,
-            'city_id' =>$request->city_id ,
+        //    'city_id' =>$request->city_id ,
             'region_id' =>$request->region_id ,
             'specialization_id' =>$request->specialization_id ,
             'main_title' =>$request->main_title ,
             'title' =>$request->title ,
-            'image' => $fileNameToStore2,
-            'certificate_image' =>$fileNameToStore,
+            'image' => $request->image,//$fileNameToStore2,
+            'certificate_image' =>$request->certificate_image,//$fileNameToStore,
             'opening_time' =>$request->opening_time ,
             'full_address' =>$request->full_address ,
             'sex' =>$request->sex ,

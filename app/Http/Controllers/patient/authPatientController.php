@@ -44,7 +44,6 @@ class authPatientController extends Controller
             return  response()->json($ex->getMessage());
         }
 
-
     }
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -53,23 +52,29 @@ class authPatientController extends Controller
             'email' => ['required','string','max:25'],
             'password' => ['required','string','min:6'],
             'image'=>['nullable'],
+            'region_id'=>['required'],
         ];
 
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
             return response()->json($validator->getMessageBag());
         }
-        $user = Patient::create($request->all());
-          $token = Auth::guard('patientApi')->login($user);
-        return    response()->json([
+        $patient = Patient::create($request->all());
+        return response()->json([
             'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
+            'message' => 'patient created successfully',
+            'doctor' => $patient,
         ]);
+        //  $token = Auth::guard('patientApi')->login($user);
+//        return    response()->json([
+//            'status' => 'success',
+//            'message' => 'User created successfully',
+//            'user' => $user,
+//            'authorisation' => [
+//                'token' => $token,
+//                'type' => 'bearer',
+//            ]
+//        ]);
     }
     public function logout(): \Illuminate\Http\JsonResponse
     {

@@ -2,25 +2,24 @@
 
 namespace Database\Factories;
 
-use App\Models\Address;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Specialization>
  */
-class AddressFactory extends Factory
+class SpecializationFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    protected $model = Address::class;
     public function definition()
     {
         return [
-            'city' => fake()->city(),
-            'region'=> fake()->city()
+            'name' => fake()->name(),
+            'image'=> fake()->image(),
         ];
     }
 }

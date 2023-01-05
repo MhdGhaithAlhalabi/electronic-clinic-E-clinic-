@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('frequency');
             $table->string('severity_pain');
             $table->string('severity_complaint');
-            $table->boolean('status')->nullable();
+            $table->string('status')->nullable();
             $table->foreignId('patient_id');
-            $table->foreignId('doctor_id');
+            $table->foreignId('doctor_id')->nullable();
 
             $table->timestamps();
         });

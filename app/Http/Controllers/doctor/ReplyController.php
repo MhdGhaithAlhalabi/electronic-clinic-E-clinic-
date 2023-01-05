@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\doctor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Question;
 use App\Models\Reply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReplyController extends Controller
 {
@@ -36,7 +38,25 @@ class ReplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'body' => 'required',
+            'question_id' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json($validator->getMessageBag());
+        }
+        Reply::create([
+            'body' => $request->body,
+            'question_id'=>$request->question_id,
+            'doctor_id' => auth()->user()->id,
+        ]);
+      $question =  Question::find($request->question_id);
+      $question->isAnswered = 1;
+      $question->save();
+
+        return response()->json('success');
     }
 
     /**

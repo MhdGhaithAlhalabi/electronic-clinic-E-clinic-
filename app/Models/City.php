@@ -12,8 +12,5 @@ class City extends Model
     {
         return $this->hasMany(Region::class);
     }
-    public function doctor(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->hasMany(Doctor::class);
-    }
+
 }

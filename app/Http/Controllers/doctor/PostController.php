@@ -5,6 +5,7 @@ namespace App\Http\Controllers\doctor;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -36,7 +37,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'title' => 'required',
+            'body' => 'required',
+            'image' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json($validator->getMessageBag());
+        }
+        Post::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'image' => $request->image,
+            'specialization_id' => auth()->user()->specialization_id,
+            'doctor_id' => auth()->user()->id,
+        ]);
+        return response()->json('success');
     }
 
     /**
