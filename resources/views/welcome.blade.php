@@ -6,6 +6,7 @@
     <title>E clinic</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body style="background-color: #1a202c">
 <div class="grid h-screen place-items-center">
     @auth('admin')
