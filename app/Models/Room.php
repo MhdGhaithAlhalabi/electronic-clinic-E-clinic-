@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     use HasFactory;
-    public function patient(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function patient(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(Patient::class);
+        return $this->belongsTo(Patient::class);
     }
     public function doctor(){
-        return $this->hasOne(Doctor::class);
+        return $this->belongsTo(Doctor::class);
     }
     public function consultation(){
-        return $this->hasOne(Consultation::class);
+        return $this->belongsTo(Consultation::class);
     }
 }

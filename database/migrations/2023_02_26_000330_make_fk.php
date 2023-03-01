@@ -15,15 +15,10 @@ return new class extends Migration
     {
         //->onDelete('cascade')
         Schema::table('doctors', function (Blueprint $table) {
-           // $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('region_id')->references('id')->on('regions');
+            $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('specialization_id')->references('id')->on('specializations');
         });
         Schema::table('patients', function (Blueprint $table) {
-           // $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('region_id')->references('id')->on('regions');
-        });
-        Schema::table('regions', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities');
         });
 
@@ -47,10 +42,11 @@ return new class extends Migration
             $table->foreign('patient_id')->references('id')->on('patients');
             $table->foreign('doctor_id')->references('id')->on('doctors');
         });
-        Schema::table('personals', function (Blueprint $table) {
+        Schema::table('complaints', function (Blueprint $table) {
             $table->foreign('patient_id')->references('id')->on('patients');
+            $table->foreign('doctor_id')->references('id')->on('doctors');
         });
-        Schema::table('generals', function (Blueprint $table) {
+        Schema::table('personals', function (Blueprint $table) {
             $table->foreign('patient_id')->references('id')->on('patients');
         });
         Schema::table('medicals', function (Blueprint $table) {

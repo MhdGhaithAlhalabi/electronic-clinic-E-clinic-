@@ -1,11 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\CityController;
 use App\Http\Controllers\admin\RegionController;
 use App\Http\Controllers\admin\SpecializationController;
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\doctor\DoctorController;
+use App\Http\Controllers\patient\authPatientController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,21 +21,30 @@ use App\Http\Controllers\doctor\DoctorController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 //admin controller
-Route::get('/login',[adminController::class,'create'])->middleware('guest')->name('login');
-Route::post('/login',[adminController::class,'store'])->middleware('guest');
-Route::post('/logout', [adminController::class, 'destroy'])->middleware('auth:admin');
-Route::get('/city', [CityController::class, 'create'])->middleware('auth:admin');
-Route::post('/city', [CityController::class, 'store'])->middleware('auth:admin');
-Route::get('/region', [RegionController::class, 'create'])->middleware('auth:admin');
-Route::post('/region', [RegionController::class, 'store'])->middleware('auth:admin');
-Route::post('/doctorApprove/{doctor}', [DoctorController::class, 'doctorApprove'])->middleware('auth:admin');
-Route::get('/doctors', [DoctorController::class, 'index'])->middleware('auth:admin');
-Route::get('/specialization', [SpecializationController::class, 'create'])->middleware('auth:admin');
-Route::post('/specialization', [SpecializationController::class, 'store'])->middleware('auth:admin');
-Route::get('/dashboard', function (){
-    return view('dashboard');
-})->middleware('auth:admin');
+Route::group(['middleware' => 'auth:admin'], function () {
+    Route::post('/logout', [adminController::class, 'destroy'])->name('logout');
+    Route::get('/city', [CityController::class, 'create']);
+    Route::post('/city', [CityController::class, 'store']);
+    Route::get('/region', [RegionController::class, 'create']);
+    Route::post('/region', [RegionController::class, 'store']);
+    Route::post('/doctorApprove/{doctor}', [DoctorController::class, 'doctorApprove']);
+    Route::get('/doctors', [DoctorController::class, 'index']);
+    Route::get('/complaint', [ComplaintController::class, 'index']);
+    Route::get('/complaint', [ComplaintController::class, 'index']);
+    Route::post('/patientBlock/{patient}', [authPatientController::class, 'patientBlock']);
+    Route::post('/patientUnblock/{patient}', [authPatientController::class, 'patientUnblock']);
+    Route::post('/doctorBlock/{doctor}', [DoctorController::class, 'doctorBlock']);
+    Route::get('/specialization', [SpecializationController::class, 'create']);
+    Route::post('/specialization', [SpecializationController::class, 'store']);
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+});
+Route::get('/login', [adminController::class, 'create'])->name('login');
+Route::post('/login', [adminController::class, 'store']);
+Route::get('/fresh', function () {
+    Artisan::call('migrate:fresh');
+    Artisan::call('db:seed');
+    return "migrate:fresh and seed";
+});

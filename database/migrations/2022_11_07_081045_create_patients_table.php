@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image')->nullable();
-            $table->foreignId('region_id');
+            $table->foreignId('city_id');
+            $table->boolean('status')->nullable();
+            $table->text('fireBaseToken')->nullable();
             $table->timestamps();
         });
     }

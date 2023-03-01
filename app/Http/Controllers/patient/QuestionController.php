@@ -4,7 +4,9 @@ namespace App\Http\Controllers\patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
@@ -12,89 +14,56 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $questions = DB::table('questions')
+            ->join('patients', 'patients.id', '=', 'questions.patient_id')
+            ->leftJoin('replies', 'replies.question_id', 'questions.id')
+            ->leftJoin('doctors', 'doctors.id', 'replies.doctor_id')
+            ->leftJoin('specializations', 'specializations.id', 'questions.specialization_id')
+            ->select('questions.*', 'patients.name', 'patients.image', 'specializations.id as specializations_id', 'specializations.name as specializations_name', 'replies.id as replies_id', 'replies.body as replies_body', 'replies.body as replies_body', 'doctors.id as doctor_id', 'doctors.name as doctor_name', 'doctors.image as doctor_image', 'doctors.image as doctor_image', 'doctors.image as doctor_image')
+            ->get();
+        $questions->each(function ($item, $key) {
+            if ($item->anonymous == 1)
+                $item->name = 'anonymous';
+            $item->image = 'https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg';
+        });
+        return response()->json($questions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index2(): JsonResponse
     {
-        //
+        $question = Question::where('answered', 0)->with(['patient:id,name,image', 'reply:id,body,question_id,doctor_id', 'reply.doctor:id,image,name', 'specialization:id,name'])->get();
+        return response()->json($question);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $rules = [
             'body' => 'required',
+            'specialization_id' => 'required',
+            'anonymous' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
-        if($validator->fails()){
-            return response()->json($validator->getMessageBag());
+        if ($validator->fails()) {
+            return response()->json($validator->getMessageBag(), 425);
         }
         Question::create([
             'body' => $request->body,
             'patient_id' => auth()->user()->id,
-            'isAnswered' => 0,
+            'answered' => 0,
+            'anonymous' => $request->anonymous,
+            'specialization_id' => $request->specialization_id
         ]);
         return response()->json('success');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Question $question)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Question $question)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Question $question)
-    {
-        //
     }
 }

@@ -16,4 +16,8 @@ class Consultation extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+    public function medication(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Medication::class);
+    }
 }

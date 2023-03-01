@@ -15,8 +15,14 @@ return new class extends Migration
     {
         Schema::create('medicals', function (Blueprint $table) {
             $table->id();
-            $table->string('sensitive');
-            $table->string('vaccines');
+            $table->string('practices');//عادات غير صحية
+            $table->string('medicines');//ادوية دائمة
+            $table->string('surgery');//عملية جراحية
+            $table->boolean('hypertension');//ارتفاع ضغط الدم
+            $table->boolean('diabetes');//مرض السكري
+            $table->string('genetic_diseases');//امراض وراثية
+            $table->string('vaccines');//لقاحات
+            $table->string('sensitive');//تحسس
             $table->foreignId('patient_id');
             $table->timestamps();
         });

@@ -31,8 +31,20 @@ class Patient extends Authenticatable implements JWTSubject
         // TODO: Implement getJWTCustomClaims() method.
         return [];
     }
-    public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(City::class);
+    }
+    public function personal(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Personal::class);
+    }
+    public function medical(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Medical::class);
+    }
+    public function consultation(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Consultation::class);
     }
 }

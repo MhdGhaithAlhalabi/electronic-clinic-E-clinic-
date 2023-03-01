@@ -20,11 +20,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('mobile_number')->unique();
             $table->string('clinic_number')->unique();
-          //  $table->foreignId('city_id');
-            $table->foreignId('region_id');
+            $table->foreignId('city_id');
             $table->integer('num_consulting')->nullable();
-            $table->integer('num_likes')->nullable();
-            $table->integer('num_views')->nullable();
+            $table->integer('num_post')->nullable();
             $table->boolean('sex');
             $table->string('image');
             $table->foreignId('specialization_id');
@@ -32,9 +30,13 @@ return new class extends Migration
             $table->string('main_title');
             $table->string('title');
             $table->string('certificate_image');
+            $table->string('certificate_number');
             $table->string('opening_time');
             $table->string('full_address');
+            $table->text('fireBaseToken')->nullable();
             $table->boolean('status')->nullable();
+            $table->float('lon');
+            $table->float('lat');
             $table->timestamps();
         });
     }

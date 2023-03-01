@@ -19,7 +19,7 @@ class SpecializationFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'image'=> fake()->image(),
+            'image'=> fake()->imageUrl(),
         ];
     }
 }

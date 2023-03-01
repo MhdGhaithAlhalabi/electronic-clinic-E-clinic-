@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->longText('body');
             $table->foreignId('specialization_id');
-            $table->boolean('isAnswered')->nullable();
+            $table->boolean('answered')->nullable();
+            $table->boolean('anonymous');
             $table->foreignId('patient_id');
             $table->timestamps();
         });

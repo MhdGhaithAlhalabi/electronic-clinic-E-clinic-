@@ -45,7 +45,7 @@ class ReplyController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
-            return response()->json($validator->getMessageBag());
+            return response()->json($validator->getMessageBag(),425);
         }
         Reply::create([
             'body' => $request->body,
@@ -53,7 +53,7 @@ class ReplyController extends Controller
             'doctor_id' => auth()->user()->id,
         ]);
       $question =  Question::find($request->question_id);
-      $question->isAnswered = 1;
+      $question->answered = 1;
       $question->save();
 
         return response()->json('success');

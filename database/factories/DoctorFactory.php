@@ -27,17 +27,22 @@ class DoctorFactory extends Factory
             //$2y$10$je3lUyAukw.WDeuQ2RIN5.uAghy1ul/BGoqyatK386u8IjvEW88F6
             'mobile_number' => fake()->phoneNumber(),
             'clinic_number' => fake()->phoneNumber(),
-            'region_id' => Region::factory(),
+            'city_id' => City::factory(),
             'sex'=> fake()->boolean(),
-            'image'=> fake()->image(),
+            'image'=> fake()->imageUrl(),
             'specialization_id'=> Specialization::factory(),
             'rate'=> fake()->numberBetween(1,5),
             'main_title' => fake()->sentence(),
             'title' => fake()->text(),
-            'certificate_image' => fake()->image(),
-            'opening_time' => fake()->text(),
+            'certificate_image' => fake()->imageUrl(),
+            'certificate_number' => fake()->buildingNumber(),
+            'opening_time' => fake()->buildingNumber(),
             'full_address' => fake()->text(),
+            'num_consulting' =>0,
+            'num_post' =>0 ,
             'status' => 0,
+            'lon' => 0,
+            'lat' => 0,
         ];
     }
 }

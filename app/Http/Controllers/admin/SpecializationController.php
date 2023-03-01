@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Region;
 use App\Models\Specialization;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,102 +17,58 @@ class SpecializationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function create()
-    {
-        $specializations = Specialization::all();
-        return view('specialization',compact('specializations'));
+        $specialization = Specialization::all('id', 'name');
+        return response()->json($specialization);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $rules = [
-            'name'=>['required','unique:specializations'],
-            'image'=>['required'],//image
+            'name' => ['required', 'unique:specializations'],
+            'image' => ['required'],//image
         ];
-        $validator =  Validator::make($request->all(),$rules);
-        if($validator->fails()){
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag());
         }
-    /*    // Handle File Upload
-        if($request->hasFile('image')) {
-            // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('public/Specialization image', $fileNameToStore);
-        }*/
+        /*    // Handle File Upload
+            if($request->hasFile('image')) {
+                // Get filename with the extension
+                $filenameWithExt = $request->file('image')->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Upload Image
+                $path = $request->file('image')->storeAs('public/Specialization image', $fileNameToStore);
+            }*/
         Specialization::create([
-            'name'=>$request->name,
-            'image'=>$request->image//$fileNameToStore
+            'name' => $request->name,
+            'image' => $request->image//$fileNameToStore
         ]);
-        return redirect()->back()->with('message','success');
+        return redirect()->back()->with('message', 'success');
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for creating a new resource.
      *
-     * @param  \App\Models\Specialization  $specialization
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Specialization $specialization)
+    public function create(): View|Factory|Application
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Specialization  $specialization
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Specialization $specialization)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Specialization  $specialization
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Specialization $specialization)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Specialization  $specialization
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Specialization $specialization)
-    {
-        //
+        $specializations = Specialization::all();
+        return view('specialization', compact('specializations'));
     }
 }

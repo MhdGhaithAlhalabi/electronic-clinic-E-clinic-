@@ -1,11 +1,13 @@
+<?php $__env->startSection('title','- cities'); ?>
+
 <?php $__env->startSection('content'); ?>
+
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full bg-gray-100 text-gray-500  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-
-                        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                     enter city name to add
                                 </h1>
@@ -24,14 +26,22 @@
                                 <?php endif; ?>
                             </div>
                         </div>
+                </div>
+<br>
+
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         all cities
                     </h1>
-                    <div class="overflow-x-auto relative">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <div class="overflow-x-auto relative">
+                        <table id="example1" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                               
+                                <th scope="col" class="py-3 px-6">
+                                     name
+                                </th>
 
                             </tr>
                             </thead>
@@ -54,6 +64,9 @@
                 </div>
             </div>
         </div>
+            </div>
+        </div>
+
     </section>
 
 

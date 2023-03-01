@@ -36,8 +36,8 @@ class Doctor extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Specialization::class);
     }
-    public function region(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(City::class);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
@@ -32,9 +33,14 @@ class AdminController extends Controller
         return redirect('doctors')->with('success', 'Welcome Back!');
     }
 
-    public function destroy(): \Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    public function destroy(Request $request): \Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        auth()->logout();
-        return redirect('/')->with('success', 'Goodbye!');
-    }
+
+             Auth::guard('admin')->logout();
+             $request->session()->invalidate();
+              $request->session()->regenerateToken();
+
+            return redirect('/');
+        }
+
 }

@@ -38,9 +38,15 @@ class MedicalController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'sensitive' => 'required',
+            'practices' => 'required',
+            'medicines' => 'required',
+            'surgery' => 'required',
+            'blood_thinner' => 'required',
+            'hypertension' => 'required',
+            'diabetes' => 'required',
+            'genetic_diseases' => 'required',
             'vaccines' => 'required',
-
+            'sensitive' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -48,8 +54,15 @@ class MedicalController extends Controller
             return response()->json($validator->getMessageBag());
         }
         Medical::create([
-            'sensitive' => $request->sensitive,
+            'practices' => $request->practices,
+            'medicines' => $request->medicines,
+            'surgery' => $request->surgery,
+            'blood_thinner' => $request->blood_thinner,
+            'hypertension' => $request->hypertension,
+            'diabetes' => $request->diabetes,
+            'genetic_diseases' => $request->genetic_diseases,
             'vaccines' => $request->vaccines,
+            'sensitive' => $request->sensitive,
             'patient_id'=> auth()->user()->id
         ]);
         return response()->json('success');

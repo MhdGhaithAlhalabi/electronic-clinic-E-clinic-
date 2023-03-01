@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('regions', function (Blueprint $table) {
+        Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->foreignId('city_id');
+            $table->enum('type',['waiting','doctor','other']);
+            $table->longText('body')->nullable();
+            $table->foreignId('patient_id');
+            $table->foreignId('doctor_id')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('regions');
+        Schema::dropIfExists('complaints');
     }
 };

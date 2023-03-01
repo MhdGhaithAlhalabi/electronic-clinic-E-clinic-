@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('generals', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
-            $table->boolean('smoking');
-            $table->boolean('bubbly');
-            $table->boolean('alcohol');
-            $table->string('medicines');
-            $table->string('surgery');
-            $table->string('genetic_diseases');
+            $table->double('rate');
             $table->foreignId('patient_id');
+            $table->foreignId('doctor_id');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('generals');
+        Schema::dropIfExists('rates');
     }
 };

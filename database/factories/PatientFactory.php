@@ -23,9 +23,8 @@ class PatientFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => bcrypt('password'), // password
-            'region_id' => Region::factory(),
-            'image'=> fake()->image(),
-
+            'city_id' => City::factory(),
+            'image'=> fake()->imageUrl(),
         ];
     }
 

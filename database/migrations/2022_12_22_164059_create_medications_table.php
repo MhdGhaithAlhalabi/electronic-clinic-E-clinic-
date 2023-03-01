@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('time');
-            $table->string('number');
+            $table->string('dose');
+            $table->string('duration');
+            $table->string('notes');
             $table->foreignId('consultation_id');
             $table->foreignId('doctor_id');
             $table->foreignId('patient_id');
